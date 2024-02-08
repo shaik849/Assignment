@@ -2,7 +2,10 @@ const express = require('express');
 const { Sequelize, DataTypes, Op } = require('sequelize');
 
 const app = express();
+const morgan = require('morgan');
 app.use(express.json());
+
+app.use(morgan('dev'))
 
 const sequelize = new Sequelize('sql6682771', 'sql6682771', 'LP8CwbT749', {
     host: 'sql6.freesqldatabase.com',
@@ -27,7 +30,7 @@ const Contact = sequelize.define('Contact', {
 
 const syncSequelizeModels = async () => {
     try {
-        await sequelize.sync({ force: true });
+        await sequelize.sync();
         console.log('Sequelize models synchronized successfully');
     } catch (error) {
         console.error('Error synchronizing Sequelize models:', error);
